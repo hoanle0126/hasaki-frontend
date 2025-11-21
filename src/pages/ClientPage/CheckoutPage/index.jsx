@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   Box,
@@ -22,6 +23,9 @@ import { sumPrice } from "../CartPage";
 import { useStateContext } from "@/Context";
 import SelectAddressModal from "../CartPage/components/SelectAddressModal";
 import PaymentTypeModal from "./PaymentTypeModal";
+import DiscountCodeModal from "./DiscountCodeModal";
+import { axiosClient } from "@/axios/axiosClient";
+import { convertVNDToUSD } from "@/Function/convertVNDToUSD";
 import { addOrder } from "@/store/users/action";
 
 const CheckoutPage = () => {
@@ -29,13 +33,16 @@ const CheckoutPage = () => {
   const { user } = useSelector((store) => store.user);
   const { addressCheckout } = useStateContext();
   const [openAddressModal, setOpenAddressModal] = React.useState(false);
+  const [openDiscountCodeModal, setOpenDiscountCodeModal] =
+    React.useState(false);
   const [openPaymentTypeModal, setOpenPaymentTypeModal] = React.useState(false);
   const [card, setCard] = React.useState(null);
   const [checkoutForm, setCheckoutForm] = React.useState({
-    payment: { name: "Thanh toán khi nhận hàng", type: "offline" },
+    payments: { name: "Thanh toán khi nhận hàng", type: "offline" },
     note: "",
     products: [],
     address_id: addressCheckout.id,
+    discount_codes: { code: "", discount: 0 },
   });
 
   React.useEffect(() => {
@@ -64,19 +71,42 @@ const CheckoutPage = () => {
     };
 
     loadSquare();
-  }, [checkoutForm.payment.type]);
+  }, [checkoutForm.payments.type]);
 
   const handlePayment = async () => {
-    try {
-      console.log("Token");
-      const result = await card.tokenize();
-      console.log(result);
-      if (result.status === "OK") {
-        const token = result.token;
-        console.log("Token", token);
+    console.log("Checkout Form: ", checkoutForm);
+    if (!card) return;
+
+    if (checkoutForm.payments.type === "online") {
+      try {
+        const result = await card.tokenize();
+        if (result.status === "OK") {
+          const paymentData = {
+            token: result.token,
+            amount: convertVNDToUSD(
+              sumPrice(user.cart) -
+                (sumPrice(user.cart) *
+                  Number(checkoutForm.discount_codes.discount)) /
+                  100
+            ), // Giá trị cần thanh toán (đơn vị: cent)
+            currency: "USD",
+          };
+
+          const response = await axiosClient.post("/payments", paymentData);
+
+          if (response.data.status === "success") {
+            dispatch(addOrder(checkoutForm));
+            alert("Đặt hàng và thanh toán thành công!");
+          } else {
+            alert("Thanh toán thất bại. Vui lòng thử lại.");
+          }
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      alert("Đặt hàng thành công!");
+      dispatch(addOrder(checkoutForm));
     }
   };
   return (
@@ -150,43 +180,25 @@ const CheckoutPage = () => {
                 <Stack direction="row" alignItems="center" gap="12px">
                   <Icon
                     icon={
-                      checkoutForm.payment.type === "offline"
+                      checkoutForm.payments.type === "offline"
                         ? "streamline-ultimate-color:cash-payment-bills-1"
                         : "logos:visaelectron"
                     }
                     width="24"
                     height="24"
                   />
-                  <Typography>{checkoutForm.payment.name}</Typography>
+                  <Typography>{checkoutForm.payments.name}</Typography>
                 </Stack>
               </Stack>
               <Button onClick={() => setOpenPaymentTypeModal(true)}>
                 Thay đổi
               </Button>
             </Stack>
-            {String(checkoutForm.payment.type) === "online" && (
+            {String(checkoutForm.payments.type) === "online" && (
               <Stack gap="20px">
                 <div id="card-container"></div>
               </Stack>
             )}
-          </Stack>
-          {/*  */}
-          {/* Phiếu mua hàng */}
-          <Stack
-            gap="8px"
-            sx={{
-              padding: "20px",
-              bgcolor: "background.paper",
-              borderRadius: "20px",
-              boxShadow: "custom.card",
-            }}
-          >
-            <Stack direction="row" alignItems="center">
-              <Typography id="modal-modal-title" variant="h6" flex={1}>
-                Phiếu mua hàng
-              </Typography>
-              <Button>Chọn phiếu mua hàng</Button>
-            </Stack>
           </Stack>
           {/*  */}
           {/* Mã giảm giá */}
@@ -203,8 +215,40 @@ const CheckoutPage = () => {
               <Typography id="modal-modal-title" variant="h6" flex={1}>
                 Mã giảm giá
               </Typography>
-              <Button>Nhập mã giảm giá</Button>
+              <Button onClick={() => setOpenDiscountCodeModal(true)}>
+                Nhập mã giảm giá
+              </Button>
             </Stack>
+            <Stack
+              direction="row"
+              alignItems="center"
+              gap="120px"
+              sx={{
+                color: "text.secondary",
+              }}
+            >
+              <Icon icon="solar:ticket-sale-bold" width="24px" height="24px" />
+              <Typography variant="subtitle2">
+                {checkoutForm.discount_codes.name}
+              </Typography>
+              <Typography variant="bodu2">
+                {checkoutForm.discount_codes.code}
+              </Typography>
+              <Typography variant="bodu2">
+                {checkoutForm.discount_codes.discount}%
+              </Typography>
+            </Stack>
+            <DiscountCodeModal
+              open={openDiscountCodeModal}
+              handleClose={() => setOpenDiscountCodeModal(false)}
+              action={(codeData) =>
+                setCheckoutForm({
+                  ...checkoutForm,
+                  discount_codes: codeData,
+                  discount_code_id: codeData.id,
+                })
+              }
+            />
           </Stack>
           {/*  */}
           {/* Thông tin kiện hàng */}
@@ -318,7 +362,10 @@ const CheckoutPage = () => {
                     sx={{
                       borderRadius: "40px",
                     }}
-                    onClick={() => handlePayment()}
+                    onClick={async () => {
+                      await dispatch(addOrder(checkoutForm));
+                      handlePayment();
+                    }}
                   >
                     Đặt hàng
                   </Button>
@@ -352,12 +399,13 @@ const CheckoutPage = () => {
             sx={{
               borderRadius: "40px",
             }}
-            onClick={async() => {
+            onClick={async () => {
+              console.log("Checkout Form: ", checkoutForm);
               await dispatch(addOrder(checkoutForm));
-              alert("success")
+              handlePayment();
             }}
           >
-            Đặt hàng
+            Đặt hàngas
           </Button>
           <Stack
             direction="row"
@@ -398,7 +446,13 @@ const CheckoutPage = () => {
             <Stack direction="row" width="100%" alignItems="center">
               <Typography color="text.secondary">Giảm giá</Typography>
               <div className="flex-1"></div>
-              <Typography>{formatCurrency(0)}</Typography>
+              <Typography>
+                {formatCurrency(
+                  (sumPrice(user.cart) *
+                    Number(checkoutForm.discount_codes.discount)) /
+                    100
+                )}
+              </Typography>
             </Stack>
             <Stack direction="row" width="100%" alignItems="center">
               <Typography color="text.secondary">Phí vận chuyển</Typography>
@@ -416,7 +470,12 @@ const CheckoutPage = () => {
               </Typography>
               <div className="flex-1"></div>
               <Typography variant="h6" color="error.main">
-                {formatCurrency(sumPrice(user.cart))}
+                {formatCurrency(
+                  sumPrice(user.cart) -
+                    (sumPrice(user.cart) *
+                      Number(checkoutForm.discount_codes.discount)) /
+                      100
+                )}
               </Typography>
             </Stack>
           </Stack>
@@ -434,7 +493,7 @@ const CheckoutPage = () => {
         open={openPaymentTypeModal}
         handleClose={() => setOpenPaymentTypeModal(false)}
         action={(value) => {
-          setCheckoutForm({ ...checkoutForm, payment: value });
+          setCheckoutForm({ ...checkoutForm, payments: value });
         }}
       />
     </Grid>

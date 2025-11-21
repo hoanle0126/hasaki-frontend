@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@mui/lab": "^7.0.1-beta.19",
     "@mui/material": "^7.1.1",
     "@mui/x-data-grid": "^8.5.2",
     "@mui/x-date-pickers": "^8.5.3",
@@ -32,6 +33,7 @@
     "axios": "^1.10.0",
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.6.0",
+    "laravel-echo": "^2.2.4",
     "motion": "^12.18.1",
     "prop-types": "^15.8.1",
     "react": "^19.1.0",
@@ -43,6 +45,7 @@
     "react-router-dom": "^7.6.2",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
+    "socket.io-client": "^4.8.1",
     "tailwindcss": "^4.1.10"
   },
   "devDependencies": {

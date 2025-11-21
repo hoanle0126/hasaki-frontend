@@ -53,8 +53,17 @@ const ProductDetail = () => {
   const [openDialog, setOpenDialog] = React.useState(false);
 
   React.useEffect(() => {
-    dispatch(getProductById(id));
+    dispatch(
+      getProductById({
+        id: id,
+        action: () => {},
+      })
+    );
   }, []);
+
+  React.useEffect(() => {
+    console.log("Products", product);
+  }, [loading]);
 
   React.useEffect(() => {
     if (openDialog) {

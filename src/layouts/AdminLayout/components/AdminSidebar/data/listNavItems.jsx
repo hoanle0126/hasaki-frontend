@@ -43,25 +43,8 @@ const ListNavItems = () => {
           name: "Categories",
           icon: "solar:widget-bold-duotone",
           state: openCategories,
-          action: () => setOpenCategories(!openCategories),
+          action: () => navigate("/admin/categories"),
           active: pathname.includes("/categories"),
-          children: [
-            {
-              name: "Heathy & Beauty",
-              active: pathname.includes("heathy-&-beauty"),
-              action: () => navigate("admin/categories/heathy-&-beauty"),
-            },
-            {
-              name: "Hasaki Clinic & Spa",
-              active: pathname.includes("hasaki-clinic-&-spa"),
-              action: () => navigate("admin/categories/hasaki-clinic-&-spa"),
-            },
-            {
-              name: "DermaHair",
-              active: pathname.includes("dermaHair"),
-              action: () => navigate("admin/categories/dermaHair"),
-            },
-          ],
         },
         {
           name: "Brands",

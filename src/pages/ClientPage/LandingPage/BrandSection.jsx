@@ -10,9 +10,11 @@ const BrandSection = () => {
   const { brands } = useSelector((store) => store.brands);
 
   React.useEffect(() => {
-    dispatch(getAllBrands({
-      onSuccess: (data) => {},
-    }));
+    dispatch(
+      getAllBrands({
+        onSuccess: () => {},
+      })
+    );
   }, []);
 
   return (

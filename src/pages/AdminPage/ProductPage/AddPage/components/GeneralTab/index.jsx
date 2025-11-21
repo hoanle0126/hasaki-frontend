@@ -19,15 +19,9 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import dayjs from "dayjs";
-import { DatePicker } from "@mui/x-date-pickers";
-import { AnimatePresence, motion } from "motion/react";
 import EditorTiptap from "@/components/EditorTiptap";
 
 const GeneralTab = ({ product, setProduct }) => {
-  const MotionStack = motion(Stack);
-  const [sales, setSales] = React.useState(false);
-
   return (
     <Stack
       sx={{
@@ -61,10 +55,31 @@ const GeneralTab = ({ product, setProduct }) => {
             </Typography>
           </Stack>
           <Stack gap={"8px"}>
+            <Typography variant="subtitle2">English Name</Typography>
+            <OutlinedInput
+              size="small"
+              color="custom"
+              fullWidth
+              placeholder="Enter product name..."
+              value={product?.english_name}
+              onChange={(e) =>
+                setProduct({
+                  ...product,
+                  english_name: e.target.value,
+                })
+              }
+            />
+            <Typography variant="captiontext" color={"text.disabled"}>
+              A product name is required and recommended to be unique.
+            </Typography>
+          </Stack>
+          <Stack gap={"8px"}>
             <Typography variant="subtitle2">Quantity</Typography>
             <OutlinedInput
               size="small"
               color="custom"
+              type="number"
+              defaultValue={0}
               fullWidth
               placeholder="Enter product name..."
               value={product?.quantity}
@@ -94,29 +109,49 @@ const GeneralTab = ({ product, setProduct }) => {
               A product name is required and recommended to be unique.
             </Typography>
           </Stack>
-        <Stack gap={"20px"}>
-          <Typography variant="h6">Sales</Typography>
-          <Stack gap={"8px"}>
-            <Typography variant="subtitle2">Giá ban đầu</Typography>
-            <OutlinedInput
-              size="small"
-              color="custom"
-              fullWidth
-              type="number"
-              placeholder="Enter base price..."
-              value={product?.price}
-              onChange={(e) =>
-                setProduct({
-                  ...product,
-                  price: e.target.value,
-                })
-              }
-            />
-            <Typography variant="captiontext" color={"text.disabled"}>
-              A product name is required and recommended to be unique.
-            </Typography>
+          <Stack gap={"20px"}>
+            <Typography variant="h6">Sales</Typography>
+            <Stack gap={"8px"}>
+              <Typography variant="subtitle2">Base price</Typography>
+              <OutlinedInput
+                size="small"
+                color="custom"
+                fullWidth
+                type="number"
+                placeholder="Enter base price..."
+                value={product?.price}
+                onChange={(e) =>
+                  setProduct({
+                    ...product,
+                    price: e.target.value,
+                  })
+                }
+              />
+              <Typography variant="captiontext" color={"text.disabled"}>
+                A product name is required and recommended to be unique.
+              </Typography>
+            </Stack>
+            <Stack gap={"8px"}>
+              <Typography variant="subtitle2">Sales value</Typography>
+              <OutlinedInput
+                size="small"
+                color="custom"
+                fullWidth
+                type="number"
+                placeholder="Enter base price..."
+                value={product?.sales}
+                onChange={(e) =>
+                  setProduct({
+                    ...product,
+                    sales: e.target.value,
+                  })
+                }
+              />
+              <Typography variant="captiontext" color={"text.disabled"}>
+                A product name is required and recommended to be unique.
+              </Typography>
+            </Stack>
           </Stack>
-        </Stack>
         </Stack>
       </Card>
     </Stack>

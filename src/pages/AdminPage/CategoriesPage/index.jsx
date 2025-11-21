@@ -1,4 +1,3 @@
-import AdminLayout from "@/layouts/AdminLayout";
 import { Icon } from "@iconify/react";
 import { Box, Breadcrumbs, Button, Stack, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
@@ -11,8 +10,6 @@ import AdminDefaultLayout from "@/layouts/AdminLayout/DefaultLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories } from "@/store/categories/action";
 import getCategoriesByType from "@/Function/getCategoriesByType";
-import CodeModal from "./CodeModal";
-import { addDiscountCode, getAllCodes } from "@/store/discountCodes/action";
 
 const hiddenFields = ["id", "__check__", "name", "action"];
 
@@ -22,9 +19,8 @@ const getTogglableColumns = (columns) => {
     .map((column) => column.field);
 };
 
-const DiscountCodePage = () => {
+const CategoriesPage = () => {
   const navigate = useNavigate();
-  const [openModal, setOpenModal] = React.useState(false);
   const [filterButtonEl, setFilterButtonEl] = React.useState(null);
   const [rowSelectionModel, setRowSelectionModel] = React.useState([]);
   const [paginationModel, setPaginationModel] = React.useState({
@@ -32,39 +28,39 @@ const DiscountCodePage = () => {
     page: 0,
   });
   const dispatch = useDispatch();
-  const { codes, loading } = useSelector((store) => store.codes);
+  const { categories, loading } = useSelector((store) => store.categories);
 
   React.useEffect(() => {
-    dispatch(getAllCodes());
+    dispatch(getAllCategories());
   }, []);
 
   React.useEffect(() => {
-    console.log("Dispatch", codes);
+    console.log(categories);
   }, [loading]);
 
   return (
     <AdminDefaultLayout
-      title={"Discount Code"}
+      title={"Categories"}
       action={
         <Button
           variant="contained"
           color="common"
-          onClick={() => setOpenModal(true)}
+          onClick={() => navigate("create")}
           startIcon={<Icon icon="eva:plus-fill" />}
         >
-          {"Add Code"}
+          {"Create Category"}
         </Button>
       }
     >
       <DataGrid
-      loading={loading}
+        loading={loading}
         checkboxSelection
         disableRowSelectionOnClick
         onRowSelectionModelChange={(it) => {
           setRowSelectionModel(it);
         }}
         // rowSelectionModel={rowSelectionModel}
-        rows={codes}
+        rows={categories}
         initialState={{
           sorting: {
             sortModel: [{ field: "created_at", sort: "desc" }],
@@ -163,21 +159,8 @@ const DiscountCodePage = () => {
           },
         }}
       />
-      <CodeModal
-        open={openModal}
-        handleClose={async () => setOpenModal(false)}
-        action={async (modalValue) => {
-          console.log("Form ", modalValue);
-          await dispatch(
-            addDiscountCode({
-              code: modalValue,
-            })
-          );
-          setOpenModal(false);
-        }}
-      />
     </AdminDefaultLayout>
   );
 };
 
-export default DiscountCodePage;
+export default CategoriesPage;

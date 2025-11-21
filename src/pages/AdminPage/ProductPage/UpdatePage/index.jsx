@@ -15,67 +15,60 @@ import {
   List,
   ListItemButton,
   Collapse,
+  Avatar,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import GeneralTab from "./components/GeneralTab";
 import AdvancedTab from "./components/AdvancedTab";
 import ImageThumbnail from "@/components/ImageThumbnail";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import {
-  getAllCategories,
-  getCategoriesChildren,
-} from "@/store/categories/action";
 import { MuiTheme } from "@/theme";
 import AdminDefaultLayout from "@/layouts/AdminLayout/DefaultLayout";
 import CustomTabPanel from "@/components/tabPanel";
-import { getAllBrands } from "@/store/brands/action";
+import SelectCategoryModal from "@/components/SelectCategoryModal";
+import SelectBrandModal from "@/components/SelectBrandModal";
+import { useDispatch, useSelector } from "react-redux";
 import { getProductById, updateProduct } from "@/store/products/action";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ViewProductPage = () => {
   const navigate = useNavigate();
-  const [tab, setTab] = React.useState("1");
+  const params = useParams();
   const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.products);
+  const [tab, setTab] = React.useState("1");
+  const [openCategory, setOpenCategory] = React.useState(false);
+  const [openBrand, setOpenBrand] = React.useState(false);
   const [product, setProduct] = React.useState({
     images: [],
     ingredient: {},
     sales: null,
     parameters: {
-      "Cấu hình và bộ nhớ": {
-        "Hệ điều hành:": ["Android 14"],
-        "Chip xử lí(CPU):": [
-          "MediaTek Dimensity 8200 5G 8 nhân",
-          "MediaTek Dimensity 8200 5G 8 nhân 2",
-        ],
-      },
-      "Camera & Màn hình": {
-        "Độ phân giải camera sau:": ["Chính 50 MP & Phụ 32 MP, 8 MP"],
+      Parameter: {
+        Barcode: [null],
+        "Thương hiệu": [null],
+        "Xuất xứ thương hiệu": [null],
+        "Nơi sản xuất": [null],
+        "Loại da": [null],
+        "Dung Tích": [null],
       },
     },
   });
-  const productReducer = useSelector((store) => store.products);
-  const categoriesReducer = useSelector((store) => store.categories);
-  const categories = categoriesReducer.categoriesChildren;
-  const { brands } = useSelector((store) => store.brands);
-  const { id } = useParams();
 
   React.useEffect(() => {
-    dispatch(getProductById(id));
+    dispatch(
+      getProductById({
+        id: params.id,
+        action: (data) => {
+          console.log("Get product by id successfully", data.id);
+          setProduct(data);
+        },
+      })
+    );
   }, []);
-
-  React.useEffect(() => {
-    setProduct(productReducer.product);
-    console.log(productReducer.product);
-  }, [productReducer.loading]);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [tab]);
-
-  React.useEffect(() => {
-    dispatch(getCategoriesChildren());
-    dispatch(getAllBrands());
-  }, []);
 
   const handleTab = (event, newValue) => {
     setTab(newValue);
@@ -83,8 +76,21 @@ const ViewProductPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProduct(product, id));
-    // navigate("/admin/products")
+    dispatch(
+      updateProduct({
+        products: product,
+        onSuccess: () => {
+          navigate("/admin/products");
+        },
+        id: params.id,
+      })
+    );
+
+    console.log("product", {
+      ...product,
+      categories_id: product.category?.id,
+      brand_id: product.brand?.id,
+    });
   };
 
   return (
@@ -134,44 +140,29 @@ const ViewProductPage = () => {
               }}
             >
               <Typography variant="h6">Category</Typography>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label" color="custom">
-                  Categories
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={Number(product?.categories_id)}
-                  label="Categories"
-                  color="custom"
-                  onChange={(e) =>
-                    setProduct({ ...product, categories_id: e.target.value })
-                  }
-                >
-                  {categories?.map((category, index) => (
-                    <MenuItem value={category.id} key={index}>
-                      <Stack
-                        direction={"row"}
-                        alignItems={"center"}
-                        gap={"8px"}
-                      >
-                        <img
-                          src={category.thumbnail}
-                          alt=""
-                          className="w-[16px] h-[16px]"
-                        />
-                        {category.name}
-                      </Stack>
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              {product?.category?.id ? (
+                <Stack direction="row" alignItems="center" gap="12px">
+                  <Avatar
+                    src={product.category.thumbnail}
+                    variant="rounded"
+                    sx={{
+                      width: "40px",
+                      height: "40px",
+                      border: "1px solid black",
+                      borderColor: "divider",
+                    }}
+                  />
+                  {product.category.name}
+                </Stack>
+              ) : (
+                "No category selected"
+              )}
               <Button
                 variant="outlined"
                 color="inherit"
-                // onClick={() => router.get(route("categories.create"))}
+                onClick={() => setOpenCategory(true)}
               >
-                Create new category
+                Select category
               </Button>
             </Box>
             <Box
@@ -186,44 +177,29 @@ const ViewProductPage = () => {
               }}
             >
               <Typography variant="h6">Brand</Typography>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label" color="custom">
-                  Brands
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={Number(product?.brand_id)}
-                  label="Categories"
-                  color="custom"
-                  onChange={(e) =>
-                    setProduct({ ...product, brand_id: e.target.value })
-                  }
-                >
-                  {brands?.map((brand, index) => (
-                    <MenuItem value={brand.id} key={index}>
-                      <Stack
-                        direction={"row"}
-                        alignItems={"center"}
-                        gap={"8px"}
-                      >
-                        <img
-                          src={brand.thumbnail}
-                          alt=""
-                          className="w-[16px] h-[16px]"
-                        />
-                        {brand.name}
-                      </Stack>
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              {product?.brand?.id ? (
+                <Stack direction="row" alignItems="center" gap="12px">
+                  <Avatar
+                    src={product.brand.logo}
+                    variant="rounded"
+                    sx={{
+                      width: "40px",
+                      height: "40px",
+                      border: "1px solid black",
+                      borderColor: "divider",
+                    }}
+                  />
+                  {product.brand.name}
+                </Stack>
+              ) : (
+                "No brand selected"
+              )}
               <Button
                 variant="outlined"
                 color="inherit"
-                // onClick={() => router.get(route("categories.create"))}
+                onClick={() => setOpenBrand(true)}
               >
-                Create new brand
+                Select Brand
               </Button>
             </Box>
           </Stack>
@@ -271,12 +247,29 @@ const ViewProductPage = () => {
               sx={{ boxShadow: "main.z1" }}
               endIcon={<Icon icon="eva:save-fill" />}
               onClick={handleSubmit}
+              loading={loading}
             >
               Save
             </Button>
           </Stack>
         </Grid>
       </Grid>
+      <SelectCategoryModal
+        open={openCategory}
+        handleClose={() => setOpenCategory(false)}
+        handleSelect={(categorySelected) => {
+          setProduct({ ...product, category: categorySelected });
+          // console.log("Handle", categorySelected);
+        }}
+      />
+      <SelectBrandModal
+        open={openBrand}
+        handleClose={() => setOpenBrand(false)}
+        handleSelect={(brandSelected) => {
+          setProduct({ ...product, brand: brandSelected });
+          // console.log("Handle", categorySelected);
+        }}
+      />
     </AdminDefaultLayout>
   );
 };

@@ -4,13 +4,8 @@ import LandingPage from "../pages/ClientPage/LandingPage";
 import AdminLayout from "@/layouts/AdminLayout";
 import DashboardPage from "@/pages/AdminPage/DashboardPage";
 import ProductPage from "@/pages/AdminPage/ProductPage";
-import HeathyBeautyPage from "@/pages/AdminPage/HeathyBeautyPage";
-import HeathyBeautyAddPage from "@/pages/AdminPage/HeathyBeautyPage/AddPage";
-import HeathyBeautyViewPage from "@/pages/AdminPage/HeathyBeautyPage/ViewPage";
 import BrandPage from "@/pages/AdminPage/BrandPage";
 import OrderPage from "@/pages/AdminPage/OrderPage";
-import DermaHairPage from "@/pages/AdminPage/DermaHairPage";
-import ClinicPage from "@/pages/AdminPage/ClinicPage";
 import BrandAddPage from "@/pages/AdminPage/BrandPage/AddPage";
 import BrandViewPage from "@/pages/AdminPage/BrandPage/ViewPage";
 import AddProductPage from "@/pages/AdminPage/ProductPage/AddPage";
@@ -36,11 +31,13 @@ import AddressViewPage from "@/pages/ClientPage/AddressPage/ViewPage";
 import CartPage from "@/pages/ClientPage/CartPage";
 import CheckoutLayout from "@/layouts/CheckoutLayout";
 import DiscountCodePage from "@/pages/AdminPage/DiscountCodePage";
-import VoucherPage from "@/pages/AdminPage/VoucherPage";
 import CategoryProductsPage from "@/pages/ClientPage/CategoryProductsPage";
 import BrandProductPage from "@/pages/ClientPage/BrandProductPage";
 import BrandClientPage from "@/pages/ClientPage/BrandsPage";
 import HotDealClientPage from "@/pages/ClientPage/HotDealPage";
+import CategoriesPage from "@/pages/AdminPage/CategoriesPage";
+import CategoriesAddPage from "@/pages/AdminPage/CategoriesPage/AddPage";
+import CategoriesViewPage from "@/pages/AdminPage/CategoriesPage/ViewPage";
 
 export const MainRouter = createBrowserRouter([
   {
@@ -115,24 +112,16 @@ export const MainRouter = createBrowserRouter([
         element: <ViewProductPage />,
       },
       {
-        path: "/admin/categories/heathy-&-beauty",
-        element: <HeathyBeautyPage />,
+        path: "/admin/categories",
+        element: <CategoriesPage />,
       },
       {
-        path: "/admin/categories/hasaki-clinic-&-spa",
-        element: <ClinicPage />,
+        path: "/admin/categories/create",
+        element: <CategoriesAddPage />,
       },
       {
-        path: "/admin/categories/dermahair",
-        element: <DermaHairPage />,
-      },
-      {
-        path: "/admin/categories/heathy-&-beauty/create",
-        element: <HeathyBeautyAddPage />,
-      },
-      {
-        path: "/admin/categories/heathy-&-beauty/:id",
-        element: <HeathyBeautyViewPage />,
+        path: "/admin/categories/:id",
+        element: <CategoriesViewPage />,
       },
       {
         path: "/admin/brands",

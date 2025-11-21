@@ -43,9 +43,9 @@ export const getBrandById =
     dispatch({ type: GET_BRAND_BY_ID_REQUEST });
     try {
       axiosClient.get("/brands/" + id + search).then((data) => {
-        console.log("url", "/brands/" + id + search);
+        console.log("data brand by id", id+search, data.data);
         dispatch({ type: GET_BRAND_BY_ID_SUCCESS, payload: data.data });
-        onSuccess();
+        onSuccess(data.data.brand);
       });
     } catch (error) {
       console.log(error);

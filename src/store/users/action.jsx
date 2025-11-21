@@ -155,10 +155,11 @@ export const addOrder = (order) => async (dispatch) => {
   await axiosClient
     .post("/orders", order)
     .then((data) => {
+  console.log("Order Data: ", data);
       dispatch({ type: ADD_ORDER_SUCCESS, payload: data.data });
     })
     .catch((e) => {
-      console.log(e)
+  console.log("Order Data: ", e);
       dispatch({ type: ADD_ORDER_FAILURE, error: e });
     });
 };

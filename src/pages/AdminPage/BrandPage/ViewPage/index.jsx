@@ -40,16 +40,15 @@ const BrandViewPage = () => {
   const brandReducer = useSelector((store) => store.brands);
 
   React.useEffect(() => {
-    dispatch(getBrandById({
-      id:id,
-      onSuccess: () => {},
-    }));
+    dispatch(
+      getBrandById({
+        id: id,
+        onSuccess: (data) => {
+          setBrand(data);
+        },
+      })
+    );
   }, []);
-
-  React.useEffect(() => {
-    setBrand(brandReducer.brand);
-    console.log("test1", brandReducer.brand);
-  }, [brandReducer.loading]);
 
   return (
     <AdminDefaultLayout title="Add brand">
@@ -210,6 +209,7 @@ const BrandViewPage = () => {
                 dispatch(updateBrand(brand, id));
                 navigate("/admin/brands");
               }}
+              loading={brandReducer.loading}
             >
               Save
             </Button>

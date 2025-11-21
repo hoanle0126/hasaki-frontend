@@ -115,7 +115,7 @@ function RenderAction(props) {
               variant="body2"
               color={"error"}
               onClick={() => {
-                dispatch(deleteDiscountCode({id:row.id}));
+                dispatch(deleteDiscountCode({id:row.code}));
               }}
             >
               Delete
@@ -133,7 +133,7 @@ function RenderAction(props) {
           await dispatch(
             updateDiscountCode({
               code: modalValue,
-              id: row.id,
+              id: row.code,
             })
           );
           setOpenModal(false);

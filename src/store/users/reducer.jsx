@@ -5,6 +5,7 @@ import {
   ADD_CART_SUCCESS,
   ADD_ORDER_FAILURE,
   ADD_ORDER_REQUEST,
+  ADD_ORDER_SUCCESS,
   DELETE_ADDRESS_REQUEST,
   DELETE_ADDRESS_SUCCESS,
   GET_USER_REQUEST,
@@ -54,7 +55,7 @@ export const userReducers = (state = initialState, action) => {
     case ADD_ADDRESS_SUCCESS:
     case UPDATE_ADDRESS_SUCCESS:
     case DELETE_ADDRESS_SUCCESS:
-    case ADD_ORDER_FAILURE:
+    case ADD_ORDER_SUCCESS:
       return { ...state, user: action.payload, loading: false };
     case SHOW_ADDRESS_SUCCESS:
       return { ...state, addressValue: action.payload, loading: false };

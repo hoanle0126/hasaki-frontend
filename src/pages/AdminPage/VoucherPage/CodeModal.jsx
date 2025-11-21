@@ -60,7 +60,11 @@ const CodeModal = ({
   });
 
   React.useEffect(() => {
-    dispatch(getAllBrands());
+    dispatch(
+      getAllBrands({
+        onSuccess: () => {},
+      })
+    );
   }, []);
 
   React.useEffect(() => {

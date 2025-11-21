@@ -31,9 +31,11 @@ const BrandPage = () => {
   const { brands, loading } = useSelector((store) => store.brands);
 
   React.useEffect(() => {
-    dispatch(getAllBrands({
-      onSuccess: () => {},
-    }));
+    dispatch(
+      getAllBrands({
+        onSuccess: () => {},
+      })
+    );
   }, []);
 
   return (
@@ -51,6 +53,7 @@ const BrandPage = () => {
       }
     >
       <DataGrid
+        loading={loading}
         checkboxSelection
         disableRowSelectionOnClick
         onRowSelectionModelChange={(it) => {

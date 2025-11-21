@@ -34,7 +34,6 @@ export const brandReducer = (state = initialState, action) => {
     case DELETE_BRAND_SUCCESS:
       return { ...state, loading: false, brands: action.payload };
     case GET_BRAND_BY_ID_SUCCESS:
-      console.log("test", action.payload);
       return {
         ...state,
         loading: false,

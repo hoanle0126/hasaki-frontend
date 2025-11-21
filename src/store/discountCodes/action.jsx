@@ -15,7 +15,7 @@ import {
 export const getAllCodes = () => async (dispatch) => {
   dispatch({ type: GET_ALL_CODE_REQUEST });
   axiosClient.get("/discount-codes").then((data) => {
-    console.log("code",data)
+    console.log("code", data);
     dispatch({ type: GET_ALL_CODE_SUCCESS, payload: data.data });
   });
 };
@@ -30,11 +30,12 @@ export const addDiscountCode =
   };
 
 export const getDiscountCodeById =
-  ({ id }) =>
+  ({ id, onSuccess }) =>
   async (dispatch) => {
     dispatch({ type: GET_CODE_REQUEST });
     axiosClient.get("/discount-codes/" + id).then((data) => {
       dispatch({ type: GET_CODE_SUCCESS, payload: data.data });
+      onSuccess(data.data);
     });
   };
 

@@ -168,11 +168,11 @@ function RenderAction(props) {
         }}
       >
         <MenuList>
-          <MenuItem onClick={() => navigate("" + row.id)}>
+          <MenuItem onClick={() => navigate("" + row.url)}>
             <Icon icon="solar:eye-bold" />
             View
           </MenuItem>
-          <MenuItem onClick={() => dispatch(deleteProduct(row.id))}>
+          <MenuItem onClick={() => dispatch(deleteProduct(row.url))}>
             <Icon
               icon="solar:trash-bin-trash-bold"
               color={MuiTheme().palette.error.main}

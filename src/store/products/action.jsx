@@ -43,43 +43,52 @@ export const getAllProducts =
       });
   };
 
-export const addProduct = (products, action) => async (dispatch) => {
-  dispatch({ type: ADD_PRODUCT_REQUEST });
-  await axiosClient
-    .post("/products", products)
-    .then((data) => {
-      dispatch({ type: ADD_PRODUCT_SUCCESS, payload: data.data });
-      action();
-    })
-    .catch((error) => {
-      dispatch({ type: ADD_PRODUCT_FAILURE, payload: error });
-    });
-};
+export const addProduct =
+  ({ products, onSuccess }) =>
+  async (dispatch) => {
+    dispatch({ type: ADD_PRODUCT_REQUEST });
+    await axiosClient
+      .post("/products", products)
+      .then((data) => {
+        dispatch({ type: ADD_PRODUCT_SUCCESS, payload: data.data });
+        onSuccess();
+        console.log("Products: ", data);
+      })
+      .catch((error) => {
+        dispatch({ type: ADD_PRODUCT_FAILURE, payload: error });
+        console.log("Error: ", error);
+      });
+  };
 
-export const getProductById = (id, action) => async (dispatch) => {
-  dispatch({ type: GET_PRODUCT_BY_ID_REQUEST });
-  await axiosClient
-    .get("/products/" + id)
-    .then((data) => {
-      dispatch({ type: GET_PRODUCT_BY_ID_SUCCESS, payload: data.data });
-      action();
-    })
-    .catch((error) => {
-      dispatch({ type: GET_PRODUCT_BY_ID_FAILURE, payload: error });
-    });
-};
+export const getProductById =
+  ({ id, action }) =>
+  async (dispatch) => {
+    dispatch({ type: GET_PRODUCT_BY_ID_REQUEST });
+    await axiosClient
+      .get("/products/" + id)
+      .then((data) => {
+        dispatch({ type: GET_PRODUCT_BY_ID_SUCCESS, payload: data.data });
+        action(data.data);
+      })
+      .catch((error) => {
+        dispatch({ type: GET_PRODUCT_BY_ID_FAILURE, payload: error });
+      });
+  };
 
-export const updateProduct = (products, id) => async (dispatch) => {
-  dispatch({ type: UPDATE_PRODUCT_REQUEST });
-  await axiosClient
-    .put("/products/" + id, products)
-    .then((data) =>
-      dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: data.data })
-    )
-    .catch((error) => {
-      dispatch({ type: UPDATE_PRODUCT_FAILURE, error: error });
-    });
-};
+export const updateProduct =
+  ({ products, id, onSuccess = () => {} }) =>
+  async (dispatch) => {
+    dispatch({ type: UPDATE_PRODUCT_REQUEST });
+    await axiosClient
+      .put("/products/" + id, products)
+      .then((data) => {
+        dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: data.data });
+        onSuccess();
+      })
+      .catch((error) => {
+        dispatch({ type: UPDATE_PRODUCT_FAILURE, error: error });
+      });
+  };
 
 export const deleteProduct = (id) => async (dispatch) => {
   dispatch({ type: DELETE_PRODUCT_REQUEST });

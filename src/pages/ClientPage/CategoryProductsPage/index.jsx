@@ -42,11 +42,6 @@ const CategoryProductsPage = () => {
     dispatch(getCategoryById(id));
   }, [id]);
 
-  React.useEffect(() => {
-    console.log(category);
-    console.log(meta);
-  }, [category]);
-
   return (
     <Stack
       sx={{
@@ -288,7 +283,7 @@ const CategoryProductsPage = () => {
                 onClick={(e) => setOpenShowPopover(e.currentTarget)}
               >
                 <Typography variant="body2">
-                  Hiển thị: {searchParams.get("limit") || 40}
+                  Hiển thị: {searchParams.get("limit") || 16}
                 </Typography>
                 <Icon icon="solar:alt-arrow-down-bold" width="18" height="18" />
               </ButtonBase>
@@ -333,21 +328,21 @@ const CategoryProductsPage = () => {
         <List>
           <MenuItem
             onClick={() => {
-              searchParams.set("limit", 40);
+              searchParams.set("limit", 16);
               setSearchParams(searchParams);
               setOpenShowPopover(null);
             }}
           >
-            Hiển thị: 40
+            Hiển thị: 16
           </MenuItem>
           <MenuItem
             onClick={() => {
-              searchParams.set("limit", 60);
+              searchParams.set("limit", 28);
               setSearchParams(searchParams);
               setOpenShowPopover(null);
             }}
           >
-            Hiển thị: 60
+            Hiển thị: 28
           </MenuItem>
         </List>
       </Popover>
