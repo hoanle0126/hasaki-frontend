@@ -1,18 +1,20 @@
 import { MuiTheme } from "@/theme";
-import { Box, GlobalStyles } from "@mui/material";
+import { Box, GlobalStyles, useTheme } from "@mui/material";
 import React from "react";
 
 const GlobalStyle = ({ children }) => {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
-        h1: MuiTheme().typography.h1,
-        h2: MuiTheme().typography.h6,
-        h3: MuiTheme().typography.h3,
-        h4: MuiTheme().typography.h4,
-        h5: MuiTheme().typography.h5,
-        h6: MuiTheme().typography.h6,
-        p: MuiTheme().typography.body2,
+        h1: theme.typography.h1,
+        h2: theme.typography.h6,
+        h3: theme.typography.h3,
+        h4: theme.typography.h4,
+        h5: theme.typography.h5,
+        h6: theme.typography.h6,
+        p: theme.typography.body2,
         "ul,ol": {
           fontSize: "14px",
           lineHeight: "22px",
@@ -20,8 +22,8 @@ const GlobalStyle = ({ children }) => {
           letterSpacing: 0,
         },
         li: {
-            marginBottom: "12px",
-            marginTop: "12px",
+          marginBottom: "12px",
+          marginTop: "12px",
           marginLeft: "40px",
         },
         ul: {

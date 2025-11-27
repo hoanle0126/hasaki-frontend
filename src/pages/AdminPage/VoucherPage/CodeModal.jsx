@@ -259,7 +259,6 @@ const CodeModal = ({
           open={openProductModal}
           handleClose={() => setOpenProductModal(false)}
           action={(modalValue) => {
-            console.log(modalValue);
             setFormCode({
               ...formCode,
               products: formCode.products.concat(modalValue),

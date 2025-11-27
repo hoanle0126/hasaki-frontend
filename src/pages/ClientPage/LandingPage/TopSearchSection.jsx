@@ -1,10 +1,11 @@
 import { MuiTheme } from "@/theme";
-import { alpha, Box, Grid, Stack, Typography } from "@mui/material";
+import { alpha, Box, Grid, Stack, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 
 const TopSearchSection = () => {
   const { categoriesChildren } = useSelector((store) => store.categories);
+  const theme = useTheme();
 
   return (
     <Stack
@@ -51,7 +52,7 @@ const TopSearchSection = () => {
                       zIndex: 100,
                       width: "100%",
                       backgroundColor: alpha(
-                        MuiTheme().palette.background.paper,
+                        theme.palette.background.paper,
                         0.9
                       ),
                     }}
@@ -69,7 +70,7 @@ const TopSearchSection = () => {
                     img: {
                       borderLeft: "1px solid black",
                       borderColor: "divider",
-                      "&:first-child": {
+                      "&:first-of-type": {
                         borderBottomWidth: "1px",
                       },
                     },

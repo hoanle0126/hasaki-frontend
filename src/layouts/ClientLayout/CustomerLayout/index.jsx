@@ -1,11 +1,16 @@
 import { Avatar, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import SideBarData from "./sideBarData";
 
 const CustomerLayout = ({ children }) => {
   const { user } = useSelector((store) => store.user);
+
+  React.useEffect(() => {
+    console.log("user", user);
+    user.email == null && window.location.replace("/");
+  }, [user]);
 
   return (
     <Grid
@@ -74,7 +79,7 @@ const CustomerLayout = ({ children }) => {
         </Stack>
       </Grid>
       <Grid size={9}>
-          <Outlet />
+        <Outlet />
       </Grid>
     </Grid>
   );

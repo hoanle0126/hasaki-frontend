@@ -5,6 +5,7 @@ import {
   Grid,
   Breadcrumbs,
   Button,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { MuiTheme } from "@/theme";
@@ -23,6 +24,7 @@ export const sumPrice = (products) => {
 };
 
 const CartPage = () => {
+  const theme = useTheme();
   const { user } = useSelector((store) => store.user);
   const [openAddressModal, setOpenAddressModal] = React.useState(false);
 
@@ -46,7 +48,7 @@ const CartPage = () => {
           }
           aria-label="breadcrumb"
           sx={{
-            fontStyle: MuiTheme().typography.body2,
+            fontStyle: theme.typography.body2,
           }}
         >
           <Link underline="hover" color="inherit" href="/">

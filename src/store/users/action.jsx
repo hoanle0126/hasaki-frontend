@@ -29,51 +29,76 @@ import {
   UPDATE_ADDRESS_FAILURE,
   UPDATE_ADDRESS_REQUEST,
   UPDATE_ADDRESS_SUCCESS,
+  VERIFY_EMAIL_FAILURE,
+  VERIFY_EMAIL_REQUEST,
+  VERIFY_EMAIL_SUCCESS,
 } from "./actionType";
 
-export const login = (user) => async (dispatch) => {
-  dispatch({ type: LOGIN_REQUEST });
+export const login =
+  ({ user: user, onSuccess = () => {} }) =>
+  async (dispatch) => {
+    dispatch({ type: LOGIN_REQUEST });
+    axiosClient
+      .post("/login", user)
+      .then((data) => {
+        localStorage.setItem("token", data.data.token);
+        dispatch({ type: LOGIN_SUCCESS, payload: data.data.user });
+        onSuccess(data.data);
+      })
+      .catch((e) => {
+        dispatch({ type: LOGIN_FAILURE, error: e });
+      });
+  };
+
+export const register =
+  ({ user: user, onSuccess = () => {} }) =>
+  async (dispatch) => {
+    dispatch({ type: REGISTER_REQUEST });
+    axiosClient
+      .post("/register", user)
+      .then((data) => {
+        localStorage.setItem("token", data.data.token);
+        dispatch({ type: REGISTER_SUCCESS, payload: data.data.user });
+        onSuccess(data.data);
+      })
+      .catch((e) => {
+        dispatch({ type: REGISTER_FAILURE, error: e });
+      });
+  };
+
+export const verifyEmail = (email) => async (dispatch) => {
+  dispatch({ type: VERIFY_EMAIL_REQUEST });
   axiosClient
-    .post("/login", user)
+    .post("/verify-email", email)
     .then((data) => {
-      localStorage.setItem("token", data.data.token);
-      dispatch({ type: LOGIN_SUCCESS, payload: data.data.user });
-      console.log(data);
+      dispatch({ type: VERIFY_EMAIL_SUCCESS, payload: data.data });
+      console.log("data", data.data);
     })
     .catch((e) => {
-      dispatch({ type: LOGIN_FAILURE, error: e });
+      dispatch({ type: VERIFY_EMAIL_FAILURE, error: e });
+      console.log("error", e);
     });
 };
 
-export const register = (user) => async (dispatch) => {
-  dispatch({ type: REGISTER_REQUEST });
-  axiosClient
-    .post("/register", user)
-    .then((data) => {
-      dispatch({ type: REGISTER_SUCCESS, payload: data.data });
-    })
-    .catch((e) => {
-      dispatch({ type: REGISTER_FAILURE, error: e });
-    });
-};
-
-export const logout = () => async (dispatch) => {
-  dispatch({ type: LOGOUT_REQUEST });
-  axiosClient
-    .post("/logout")
-    .then(() => {
-      localStorage.removeItem("token");
-      dispatch({ type: LOGOUT_SUCCESS });
-    })
-    .catch((e) => {
-      dispatch({ type: LOGOUT_FAILURE, error: e });
-    });
-};
+export const logout =
+  ({ onSuccess = () => {} }) =>
+  async (dispatch) => {
+    dispatch({ type: LOGOUT_REQUEST });
+    axiosClient
+      .post("/logout")
+      .then(() => {
+        localStorage.removeItem("token");
+        dispatch({ type: LOGOUT_SUCCESS });
+        onSuccess();
+      })
+      .catch((e) => {
+        dispatch({ type: LOGOUT_FAILURE, error: e });
+      });
+  };
 
 export const getUser = () => async (dispatch) => {
   dispatch({ type: GET_USER_REQUEST });
   axiosClient.get("/user").then((data) => {
-    console.log("User: ", data.data);
     dispatch({ type: GET_USER_SUCCESS, payload: data.data });
   });
 };
@@ -155,11 +180,9 @@ export const addOrder = (order) => async (dispatch) => {
   await axiosClient
     .post("/orders", order)
     .then((data) => {
-  console.log("Order Data: ", data);
       dispatch({ type: ADD_ORDER_SUCCESS, payload: data.data });
     })
     .catch((e) => {
-  console.log("Order Data: ", e);
       dispatch({ type: ADD_ORDER_FAILURE, error: e });
     });
 };

@@ -22,13 +22,13 @@ const LandingPage = () => {
           backgroundColor: "background.neutral",
         }}
       >
-        {/* <SalesSection /> */}
+        <SalesSection />
         <SubBannerSection />
         <CategoriesSection />
         <BrandSection />
         <TopSellSection />
-        {/* <TopSearchSection /> */}
-        {/* <ServiceSection /> */}
+        <TopSearchSection />
+        <ServiceSection />
       </Stack>
       <ProductSection />
     </div>

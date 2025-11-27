@@ -200,10 +200,6 @@ const FeatureSection = ({ action }) => {
           variant="outlined"
           size="large"
           onClick={() => {
-            console.log(
-              descriptionRef.current?.getBoundingClientRect().top +
-                window.scrollY
-            );
             setExpand(!expand);
             window.scrollTo({
               top:
@@ -450,7 +446,6 @@ const FeatureSection = ({ action }) => {
                       review: { ...reviewForm, product_id: product.id },
                     })
                   );
-                  console.log({ ...reviewForm, product_id: product.id });
                 }}
               >
                 Gửi

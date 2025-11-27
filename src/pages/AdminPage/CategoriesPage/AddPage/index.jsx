@@ -357,7 +357,6 @@ const CategoriesAddPage = () => {
                                 let _category = startCategory
                                   .concat(newCategory)
                                   .concat(endCategory);
-                                console.log("Children", _category);
                                 setCategory({
                                   ...category,
                                   children: _category,
@@ -381,7 +380,6 @@ const CategoriesAddPage = () => {
                       id={-2}
                       category={{ name: "", thumbnail: "", type: "Category" }}
                       action={(modalValue) => {
-                        console.log(modalValue);
                         setCategory({
                           ...category,
                           children: [...category.children, modalValue],
@@ -409,7 +407,6 @@ const CategoriesAddPage = () => {
               sx={{ boxShadow: "main.z1" }}
               endIcon={<Icon icon="eva:save-fill" />}
               onClick={() => {
-                console.log(category);
                 // dispatch(createCategory(category))
               }}
             >

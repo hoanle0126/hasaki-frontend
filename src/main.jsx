@@ -4,12 +4,12 @@ import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import { MainRouter } from "@/router";
 import { ThemeProvider } from "@mui/material";
-import { MuiTheme } from "./theme";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import ThemeContext from "./Context";
+import { MuiTheme } from "./theme";
 
 createRoot(document.getElementById("root")).render(
   <LocalizationProvider dateAdapter={AdapterDayjs}>

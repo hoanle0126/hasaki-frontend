@@ -1,4 +1,4 @@
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button, Stack, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useRef } from "react";
 import DataGridHeader from "./DataGridHeader";
@@ -7,11 +7,10 @@ import { MuiTheme } from "@/theme";
 import { useSelector } from "react-redux";
 
 const CardDataGrid = () => {
+  const theme = useTheme();
   const { user } = useSelector((store) => store.user);
   // const navigate = useNavigate();
   const [products, setProducts] = React.useState(user?.cart);
-
-  React.useEffect(() => console.log(user.cart));
 
   return (
     <>
@@ -33,7 +32,7 @@ const CardDataGrid = () => {
             backgroundColor: "background.paper",
             "--unstable_DataGrid-headWeight": 500,
             "--DataGrid-containerBackground":
-              MuiTheme().palette.background.neutral,
+              theme.palette.background.neutral,
             "& .MuiDataGrid-row": {
               "&:hover": {
                 backgroundColor: "transparent",

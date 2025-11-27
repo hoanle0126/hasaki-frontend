@@ -74,7 +74,6 @@ const CheckoutPage = () => {
   }, [checkoutForm.payments.type]);
 
   const handlePayment = async () => {
-    console.log("Checkout Form: ", checkoutForm);
     if (!card) return;
 
     if (checkoutForm.payments.type === "online") {
@@ -102,7 +101,7 @@ const CheckoutPage = () => {
           }
         }
       } catch (error) {
-        console.log(error);
+        // 
       }
     } else {
       alert("Đặt hàng thành công!");
@@ -400,7 +399,6 @@ const CheckoutPage = () => {
               borderRadius: "40px",
             }}
             onClick={async () => {
-              console.log("Checkout Form: ", checkoutForm);
               await dispatch(addOrder(checkoutForm));
               handlePayment();
             }}

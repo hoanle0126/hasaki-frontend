@@ -10,7 +10,6 @@ export const getAllCities = () => async (dispatch) => {
   await axiosClient
     .get("/list_cities")
     .then((data) => {
-      console.log(data.data);
       dispatch({ type: GET_CITIES_SUCCESS, payload: data.data });
     })
     .catch((e) => {

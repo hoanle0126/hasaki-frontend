@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { Box, Breadcrumbs, Button, Stack, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Button, Stack, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React from "react";
 import DataGridHeader from "./components/DataGridHeader";
@@ -37,6 +37,7 @@ const ProductPage = () => {
       })
     );
   }, [paginationModel.page, paginationModel.pageSize]);
+  const theme = useTheme();
 
   return (
     <AdminDefaultLayout
@@ -71,7 +72,7 @@ const ProductPage = () => {
           boxShadow: "custom.card",
           border: "none",
           backgroundColor:
-            MuiTheme().palette.mode === "dark" && "background.default",
+            theme.palette.mode === "dark" && "background.default",
           "& .MuiDataGrid-columnHeader": {
             "& .MuiDataGrid-columnHeaderTitle": {
               fontWeight: 600,

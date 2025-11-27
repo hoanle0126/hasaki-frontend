@@ -13,7 +13,7 @@ export const getFlashDeals = () => async (dispatch) => {
       dispatch({ type: GET_ALL_FLASH_DEALS_SUCCESS, payload: data.data });
     });
   } catch (error) {
-    console.log(error);
+    // 
   }
 };
 
@@ -22,9 +22,8 @@ export const updateFlashDeals = (flashDeal) => async (dispatch) => {
   try {
     axiosClient.post("/flash-deals", flashDeal).then((data) => {
       dispatch({ type: UPDATE_FLASH_DEAL_SUCCESS, payload: data.data });
-      console.log(data.data);
     });
   } catch (error) {
-    console.log(error);
+    // 
   }
 };

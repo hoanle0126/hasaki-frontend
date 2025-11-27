@@ -34,6 +34,7 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,6 +47,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const ProductDetail = () => {
+  const theme = useTheme();
   const { id } = useParams();
   const dispatch = useDispatch();
   const { product, loading } = useSelector((store) => store.products);
@@ -60,10 +62,6 @@ const ProductDetail = () => {
       })
     );
   }, []);
-
-  React.useEffect(() => {
-    console.log("Products", product);
-  }, [loading]);
 
   React.useEffect(() => {
     if (openDialog) {
@@ -91,7 +89,7 @@ const ProductDetail = () => {
           }
           aria-label="breadcrumb"
           sx={{
-            fontStyle: MuiTheme().typography.body2,
+            fontStyle: theme.typography.body2,
             paddingBottom: "8px",
           }}
         >

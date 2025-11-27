@@ -16,6 +16,7 @@ import {
   ListItemButton,
   Collapse,
   Avatar,
+  useTheme,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import GeneralTab from "./components/GeneralTab";
@@ -76,12 +77,8 @@ const AddProductPage = () => {
       })
     );
     // navigate("/admin/products");
-    console.log("product", {
-      ...product,
-      categories_id: product.category?.id,
-      brand_id: product.brand?.id,
-    });
   };
+  const theme = useTheme();
 
   return (
     <AdminDefaultLayout title={"Create new product"}>
@@ -207,7 +204,7 @@ const AddProductPage = () => {
               sx={{
                 "& .MuiButtonBase-root.MuiTab-root": {
                   textTransform: "none",
-                  fontStyle: MuiTheme().typography.subtitle2,
+                  fontStyle: theme.typography.subtitle2,
                 },
               }}
             >
@@ -249,7 +246,6 @@ const AddProductPage = () => {
         handleClose={() => setOpenCategory(false)}
         handleSelect={(categorySelected) => {
           setProduct({ ...product, category: categorySelected });
-          // console.log("Handle", categorySelected);
         }}
       />
       <SelectBrandModal
@@ -257,7 +253,6 @@ const AddProductPage = () => {
         handleClose={() => setOpenBrand(false)}
         handleSelect={(brandSelected) => {
           setProduct({ ...product, brand: brandSelected });
-          // console.log("Handle", categorySelected);
         }}
       />
     </AdminDefaultLayout>

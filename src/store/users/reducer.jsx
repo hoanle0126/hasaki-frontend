@@ -20,6 +20,8 @@ import {
   SHOW_ADDRESS_SUCCESS,
   UPDATE_ADDRESS_REQUEST,
   UPDATE_ADDRESS_SUCCESS,
+  VERIFY_EMAIL_REQUEST,
+  VERIFY_EMAIL_SUCCESS,
 } from "./actionType";
 
 const initialState = {
@@ -60,6 +62,7 @@ export const userReducers = (state = initialState, action) => {
     case SHOW_ADDRESS_SUCCESS:
       return { ...state, addressValue: action.payload, loading: false };
     case LOGOUT_SUCCESS:
+    case VERIFY_EMAIL_SUCCESS:
       return { ...state, user: {}, loading: false };
     default:
       return state;

@@ -24,9 +24,6 @@ import React from "react";
 const PaymentTypeModal = ({ open, handleClose, action }) => {
   const [form, setForm] = React.useState({});
 
-  React.useEffect(() => {
-    console.log("Form", form);
-  }, [form]);
 
   return (
     <Modal

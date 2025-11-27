@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { Box, ButtonBase, Stack, Typography } from "@mui/material";
+import { Box, ButtonBase, Stack, Typography, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import ListNavItems from "./data/listNavItems";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { MuiTheme } from "@/theme";
 const AdminSidebar = () => {
   const [activeSidebar, setActiveSidebar] = useState(true);
   const navigate = useNavigate();
+  const theme = useTheme();
 
   return (
     <>
@@ -83,8 +84,8 @@ const AdminSidebar = () => {
                   },
                   "& .MuiTypography-root ": {
                     fontStyle: activeSidebar
-                      ? MuiTheme().typography.body2
-                      : MuiTheme().typography.captiontext,
+                      ? theme.typography.body2
+                      : theme.typography.captiontext,
                   },
                 },
               },
@@ -96,7 +97,7 @@ const AdminSidebar = () => {
           <ButtonBase onClick={() => setActiveSidebar(!activeSidebar)}>
             <Icon
               icon="eva:arrow-ios-back-fill"
-              color={MuiTheme().palette.text.primary}
+              color={theme.palette.text.primary}
             />
           </ButtonBase>
         </Box>

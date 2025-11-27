@@ -16,6 +16,7 @@ import {
   ListItemButton,
   Collapse,
   Avatar,
+  useTheme,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import GeneralTab from "./components/GeneralTab";
@@ -31,6 +32,7 @@ import { getProductById, updateProduct } from "@/store/products/action";
 import { useNavigate, useParams } from "react-router-dom";
 
 const ViewProductPage = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
@@ -59,7 +61,6 @@ const ViewProductPage = () => {
       getProductById({
         id: params.id,
         action: (data) => {
-          console.log("Get product by id successfully", data.id);
           setProduct(data);
         },
       })
@@ -85,12 +86,6 @@ const ViewProductPage = () => {
         id: params.id,
       })
     );
-
-    console.log("product", {
-      ...product,
-      categories_id: product.category?.id,
-      brand_id: product.brand?.id,
-    });
   };
 
   return (
@@ -217,7 +212,7 @@ const ViewProductPage = () => {
               sx={{
                 "& .MuiButtonBase-root.MuiTab-root": {
                   textTransform: "none",
-                  fontStyle: MuiTheme().typography.subtitle2,
+                  fontStyle: theme.typography.subtitle2,
                 },
               }}
             >
@@ -259,7 +254,6 @@ const ViewProductPage = () => {
         handleClose={() => setOpenCategory(false)}
         handleSelect={(categorySelected) => {
           setProduct({ ...product, category: categorySelected });
-          // console.log("Handle", categorySelected);
         }}
       />
       <SelectBrandModal
@@ -267,7 +261,6 @@ const ViewProductPage = () => {
         handleClose={() => setOpenBrand(false)}
         handleSelect={(brandSelected) => {
           setProduct({ ...product, brand: brandSelected });
-          // console.log("Handle", categorySelected);
         }}
       />
     </AdminDefaultLayout>

@@ -36,7 +36,6 @@ export const getAllProducts =
       )
       .then((data) => {
         dispatch({ type: GET_ALL_PRODUCTS_SUCCESS, payload: data.data });
-        console.log(data.data.data);
       })
       .catch((error) => {
         dispatch({ type: GET_ALL_PRODUCTS_FAILURE, payload: error });
@@ -52,11 +51,9 @@ export const addProduct =
       .then((data) => {
         dispatch({ type: ADD_PRODUCT_SUCCESS, payload: data.data });
         onSuccess();
-        console.log("Products: ", data);
       })
       .catch((error) => {
         dispatch({ type: ADD_PRODUCT_FAILURE, payload: error });
-        console.log("Error: ", error);
       });
   };
 

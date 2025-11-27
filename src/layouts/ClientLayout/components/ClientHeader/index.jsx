@@ -10,36 +10,32 @@ import {
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories, getCategoryById } from "@/store/categories/action";
-import Banner from "./Banner";
 import MainSection from "./MainSection";
-import LoginPage from "@/pages/AuthPage/LoginPage";
-import RegisterPage from "@/pages/AuthPage/RegisterPage";
 import { getUser } from "@/store/users/action";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const ClientHeader = () => {
   const containerRef = React.useRef(null);
+  const theme = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const [onDanhMuc, setOnDanhMuc] = React.useState(false);
   const dispatch = useDispatch();
   const categoriesReducer = useSelector((store) => store.categories);
+  const { user } = useSelector((store) => store.user);
   const [categoriesChildren, setCategoriesChildren] = React.useState({
     children: [],
   });
 
   React.useEffect(() => {
     dispatch(getAllCategories());
-    dispatch(getUser());
+    user.email == null && dispatch(getUser());
   }, []);
-
-  React.useEffect(() => {
-    console.log(categoriesReducer.categories);
-  }, [categoriesReducer.loading]);
 
   React.useEffect(() => {
     setOnDanhMuc(false);
@@ -75,7 +71,7 @@ const ClientHeader = () => {
             icon="solar:hamburger-menu-outline"
             width="28"
             height="28"
-            color={MuiTheme().palette.primary.main}
+            color={theme.palette.primary.main}
           />
           <Typography
             variant="captiontext"
@@ -96,7 +92,7 @@ const ClientHeader = () => {
           { title: "clinic & spa" },
           { title: "dermahair" },
         ].map((item, index) => (
-          <Link to={item.to}>
+          <Link to={item.to} key={index}>
             <Typography
               key={index}
               textTransform="uppercase"

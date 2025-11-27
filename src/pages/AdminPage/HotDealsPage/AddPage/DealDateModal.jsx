@@ -72,7 +72,6 @@ const DealDateModal = ({ open, handleClose, action, deal }) => {
             <DateTimePicker
               value={dayjs(dealModel?.time)}
               onChange={(e) => {
-                console.log(e.toISOString());
                 setDealModel({ ...dealModel, time: e.toISOString() });
               }}
               sx={{ width: "100%" }}

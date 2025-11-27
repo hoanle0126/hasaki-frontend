@@ -8,6 +8,7 @@ import {
   Popover,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ import axios from "axios";
 import { MuiTheme } from "@/theme";
 
 const AdminHeader = ({ title }) => {
+  const theme = useTheme();
   const [openSetting, setOpenSetting] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -41,19 +43,19 @@ const AdminHeader = ({ title }) => {
         <IconButton>
           <Icon
             icon="solar:chat-line-bold-duotone"
-            color={MuiTheme().palette.text.primary}
+            color={theme.palette.text.primary}
           />
         </IconButton>
         <IconButton>
           <Icon
             icon="solar:bell-bing-bold-duotone"
-            color={MuiTheme().palette.text.primary}
+            color={theme.palette.text.primary}
           />
         </IconButton>
         <IconButton onClick={() => setOpenSetting(true)}>
           <Icon
             icon="solar:settings-bold-duotone"
-            color={MuiTheme().palette.text.primary}
+            color={theme.palette.text.primary}
           />
         </IconButton>
       </Stack>
@@ -85,7 +87,7 @@ const AdminHeader = ({ title }) => {
             maxWidth: "160px",
           }}
         >
-          <MenuItem onClick={() => console.log("")}>
+          <MenuItem onClick={() => {}}>
             <Icon icon="solar:user-circle-linear" />
             <Typography variant="body2">Profile</Typography>
           </MenuItem>

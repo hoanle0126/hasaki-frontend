@@ -2,12 +2,13 @@ import React from "react";
 import { usePrevNextButtons } from "./EmblaCarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
 import "./style.css";
-import { alpha, Box, ButtonBase, Stack } from "@mui/material";
+import { alpha, Box, ButtonBase, Stack, useTheme } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { MuiTheme } from "@/theme";
 
 const EmblaCarousel = ({ lists, options, children, size, spacing }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
+  const theme = useTheme();
 
   const {
     prevBtnDisabled,
@@ -62,7 +63,7 @@ const EmblaCarousel = ({ lists, options, children, size, spacing }) => {
       >
         <ButtonBase
           sx={{
-            backgroundColor: alpha(MuiTheme().palette.text.primary, 0.4),
+            backgroundColor: alpha(theme.palette.text.primary, 0.4),
             padding: "6px 2px",
             borderTopRightRadius: "8px",
             borderBottomRightRadius: "8px",
@@ -93,7 +94,7 @@ const EmblaCarousel = ({ lists, options, children, size, spacing }) => {
       >
         <ButtonBase
           sx={{
-            backgroundColor: alpha(MuiTheme().palette.text.primary, 0.4),
+            backgroundColor: alpha(theme.palette.text.primary, 0.4),
             padding: "6px 2px",
             borderTopLeftRadius: "8px",
             borderBottomLeftRadius: "8px",

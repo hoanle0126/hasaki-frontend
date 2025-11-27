@@ -1,7 +1,7 @@
 import { MuiTheme } from "@/theme";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { Icon } from "@iconify/react";
-import { Avatar, Box, CircularProgress, Skeleton } from "@mui/material";
+import { Avatar, Box, CircularProgress, Skeleton, useTheme } from "@mui/material";
 import React from "react";
 
 const ImageThumbnail = ({ src, setSrc, id, width, height }) => {
@@ -12,6 +12,7 @@ const ImageThumbnail = ({ src, setSrc, id, width, height }) => {
     setSrc(imgUrl);
     setLoading(false);
   };
+  const theme = useTheme();
 
   return (
     <Box
@@ -43,7 +44,7 @@ const ImageThumbnail = ({ src, setSrc, id, width, height }) => {
             icon="solar:gallery-wide-bold"
             width="120"
             height="120"
-            color={MuiTheme().palette.grey[300]}
+            color={theme.palette.grey[300]}
             className="absolute"
           />
         ) : (
@@ -80,7 +81,7 @@ const ImageThumbnail = ({ src, setSrc, id, width, height }) => {
             icon="solar:pen-bold"
             width="14"
             height="14"
-            color={MuiTheme().palette.text.disabled}
+            color={theme.palette.text.disabled}
           />
           <input
             type="file"

@@ -1,10 +1,11 @@
 import { MuiTheme } from "@/theme";
-import { alpha, Box, Grid, Stack, Typography } from "@mui/material";
+import { alpha, Box, Grid, Stack, Typography, useTheme } from "@mui/material";
 import useEmblaCarousel from "embla-carousel-react";
 import React from "react";
 
 const TopSellSection = () => {
   const [listTopSellRef] = useEmblaCarousel();
+  const theme = useTheme();
 
   return (
     <Stack
@@ -87,7 +88,7 @@ const TopSellSection = () => {
                       padding: "4px",
                       paddingX: "12px",
                       backgroundColor: alpha(
-                        MuiTheme().palette.background.paper,
+                        theme.palette.background.paper,
                         0.7
                       ),
                       position: "absolute",

@@ -42,7 +42,6 @@ export const hotDealReducer = (state = initialState, action) => {
     case DELETE_HOT_DEAL_SUCCESS:
       return { ...state, loading: false, hot_deals: action.payload };
     case GET_HOT_DEAL_BY_ID_SUCCESS:
-      console.log("test", action.payload);
       return { ...state, loading: false, hot_deal: action.payload };
     default:
       return state;

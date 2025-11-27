@@ -285,9 +285,6 @@ const HotDealsAddPage = () => {
   const [editSales, setEditSales] = React.useState(false);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    console.log("deals", deals);
-  }, [deals]);
 
   return (
     <AdminDefaultLayout title="Add hot deals">
@@ -420,7 +417,6 @@ const HotDealsAddPage = () => {
                                 .concat(currentDeal)
                                 .concat(endDeals);
 
-                              console.log(currentDeal);
                               setDeals({ ...deals, deal_times: newDeals });
                             }}
                           />

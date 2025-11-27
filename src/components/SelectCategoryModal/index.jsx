@@ -36,10 +36,6 @@ const SelectCategoryModal = ({ open, handleClose, handleSelect }) => {
     dispatch(getAllCategories());
   }, []);
 
-  React.useEffect(() => {
-    console.log(categories);
-  }, [categories]);
-
   return (
     <Modal
       open={open}
@@ -65,7 +61,6 @@ const SelectCategoryModal = ({ open, handleClose, handleSelect }) => {
               key={category.id}
               category={category}
               selectItem={(itemSelected) => {
-                console.log("Selected ", itemSelected);
                 handleSelect(itemSelected);
                 handleClose();
               }}

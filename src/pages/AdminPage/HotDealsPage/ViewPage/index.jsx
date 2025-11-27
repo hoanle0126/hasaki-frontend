@@ -54,7 +54,6 @@ const HotDealsViewPage = () => {
 
   React.useEffect(() => {
     setDeals(dealReducer.hot_deal);
-    console.log(dealReducer.hot_deal);
   }, [dealReducer.loading]);
 
   return (
@@ -188,7 +187,6 @@ const HotDealsViewPage = () => {
                                 .concat(currentDeal)
                                 .concat(endDeals);
 
-                              console.log(currentDeal);
                               setDeals({ ...deals, deal_times: newDeals });
                             }}
                           />
@@ -362,7 +360,6 @@ const HotDealsViewPage = () => {
         }}
         onClick={() => {
           dispatch(updateHotDeal(deals, id));
-          console.log(deals);
         }}
       >
         Save

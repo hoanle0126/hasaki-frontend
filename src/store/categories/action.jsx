@@ -43,7 +43,6 @@ export const createCategory = (category) => async (dispatch) => {
         dispatch({ type: CREATE_CATEGORY_SUCCESS, payload: data });
       })
       .catch((e) => {
-        console.log(e);
         dispatch({ type: CREATE_CATEGORY_FAILURE, payload: e });
       });
   } catch (e) {
@@ -80,7 +79,6 @@ export const updateCategory = (id, category) => async (dispatch) => {
       })
       .catch((e) => {
         dispatch({ type: UPDATE_CATEGORY_FAILURE, error: e });
-        console.log(e);
       });
   } catch (e) {
     dispatch({ type: UPDATE_CATEGORY_FAILURE, error: e });

@@ -17,10 +17,9 @@ export const getAllHotDeals = () => async (dispatch) => {
   try {
     axiosClient.get("/hot-deals").then((data) => {
       dispatch({ type: GET_ALL_HOT_DEALS_SUCCESS, payload: data.data });
-      console.log(data.data)
     });
   } catch (error) {
-    console.log(error);
+    // 
   }
 };
 
@@ -32,7 +31,7 @@ export const addNewHotDeal = (hot_deal) => async (dispatch) => {
       alert("Success")
     });
   } catch (error) {
-    console.log(error);
+    // 
   }
 };
 
@@ -41,10 +40,9 @@ export const getHotDealsById = (id) => async (dispatch) => {
   try {
     axiosClient.get("/hot-deals/" + id).then((data) => {
       dispatch({ type: GET_HOT_DEAL_BY_ID_SUCCESS, payload: data.data });
-      console.log("hot-deals", data.data);
     });
   } catch (error) {
-    console.log(error);
+    // 
   }
 };
 
@@ -55,7 +53,7 @@ export const updateHotDeal = (hot_deal, id) => async (dispatch) => {
       dispatch({ type: UPDATE_HOT_DEAL_SUCCESS, payload: data.data });
     });
   } catch (error) {
-    console.log(error);
+    // 
   }
 };
 
@@ -63,10 +61,9 @@ export const deleteHotDeal = (id) => async (dispatch) => {
   dispatch({ type: DELETE_HOT_DEAL_REQUEST });
   try {
     axiosClient.delete("/hot-deals/" + id).then((data) => {
-      console.log(data.data);
       dispatch({ type: DELETE_HOT_DEAL_SUCCESS, payload: data.data });
     });
   } catch (error) {
-    console.log(error);
+    // 
   }
 };

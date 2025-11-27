@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import RegisterPage from "../RegisterPage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/store/users/action";
 
 const LoginPage = ({ open, handleClose, navigate }) => {
@@ -19,6 +19,7 @@ const LoginPage = ({ open, handleClose, navigate }) => {
     password: "",
   });
   const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.user);
 
   return (
     <Dialog
@@ -33,7 +34,7 @@ const LoginPage = ({ open, handleClose, navigate }) => {
       component="form"
       onSubmit={(e) => {
         e.preventDefault();
-        dispatch(login(form));
+        dispatch(login({ user: form, onSuccess: handleClose }));
       }}
     >
       <ButtonBase
@@ -155,6 +156,7 @@ const LoginPage = ({ open, handleClose, navigate }) => {
               variant="contained"
               sx={{ borderRadius: "99px" }}
               type="submit"
+              loading={loading}
             >
               Đăng nhập
             </Button>

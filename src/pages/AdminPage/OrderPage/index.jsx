@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { Box, Breadcrumbs, Button, Stack, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Button, Stack, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React from "react";
 import DataGridHeader from "./components/DataGridHeader";
@@ -33,10 +33,7 @@ const OrderPage = () => {
   React.useEffect(() => {
     dispatch(getAllCategories());
   }, []);
-
-  React.useEffect(() => {
-    console.log(categories);
-  }, [loading]);
+  const theme = useTheme()
 
   return (
     <AdminDefaultLayout
@@ -73,7 +70,7 @@ const OrderPage = () => {
           boxShadow: "custom.card",
           border: "none",
           backgroundColor:
-            MuiTheme().palette.mode === "dark" && "background.default",
+            theme.palette.mode === "dark" && "background.default",
           "& .MuiDataGrid-columnHeader": {
             "& .MuiDataGrid-columnHeaderTitle": {
               fontWeight: 600,

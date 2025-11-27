@@ -22,7 +22,7 @@ export const getAllBrands =
         onSuccess(data.data);
       });
     } catch (error) {
-      console.log(error);
+      // 
     }
   };
 
@@ -33,7 +33,7 @@ export const addNewBrand = (brand) => async (dispatch) => {
       dispatch({ type: ADD_BRAND_SUCCESS, payload: data.data });
     });
   } catch (error) {
-    console.log(error);
+    // 
   }
 };
 
@@ -43,12 +43,11 @@ export const getBrandById =
     dispatch({ type: GET_BRAND_BY_ID_REQUEST });
     try {
       axiosClient.get("/brands/" + id + search).then((data) => {
-        console.log("data brand by id", id+search, data.data);
         dispatch({ type: GET_BRAND_BY_ID_SUCCESS, payload: data.data });
         onSuccess(data.data.brand);
       });
     } catch (error) {
-      console.log(error);
+      // 
     }
   };
 
@@ -59,7 +58,7 @@ export const updateBrand = (brand, id) => async (dispatch) => {
       dispatch({ type: UPDATE_BRAND_SUCCESS, payload: data.data });
     });
   } catch (error) {
-    console.log(error);
+    // 
   }
 };
 
@@ -67,10 +66,9 @@ export const deleteBrand = (id) => async (dispatch) => {
   dispatch({ type: DELETE_BRAND_REQUEST });
   try {
     axiosClient.delete("/brands/" + id).then((data) => {
-      console.log(data.data);
       dispatch({ type: DELETE_BRAND_SUCCESS, payload: data.data });
     });
   } catch (error) {
-    console.log(error);
+    // 
   }
 };

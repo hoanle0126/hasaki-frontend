@@ -51,7 +51,6 @@ const BrandClientPage = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log("Groups", brandGroups);
     brandRefs.current = brandGroups.map(
       (_, i) => brandRefs.current[i] ?? React.createRef()
     );

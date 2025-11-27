@@ -4,14 +4,17 @@ import { typography } from "./elements/typography";
 import { Shadows } from "./elements/shadow";
 import ComponentsCustom from "./elements/components";
 
-export function MuiTheme() {
-  const palette = Palette();
-  const shadows = Shadows(palette);
+const palette = Palette();
+const shadowsData = Shadows(palette);
 
-  return createTheme({
-    palette: Palette(),
-    typography: typography,
-    shadows,
-    components: ComponentsCustom(shadows, palette, typography),
-  });
-}
+export const MuiTheme = createTheme({
+  palette: Palette(),
+  typography: typography,
+  shadows: shadowsData.main,
+  components: ComponentsCustom(shadowsData, palette, typography),
+  customShadows: {
+    header: shadowsData.header,
+    ...shadowsData.custom,
+    ...shadowsData.color,
+  },
+});

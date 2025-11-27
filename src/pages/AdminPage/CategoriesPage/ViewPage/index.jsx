@@ -53,12 +53,10 @@ const CategoriesViewPage = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    console.log("id", id);
     dispatch(getCategoryById(id));
   }, []);
 
   React.useEffect(() => {
-    console.log("categories", categoriesReducer.category);
     setCategory(categoriesReducer.category);
   }, [categoriesReducer.loading]);
 
@@ -370,7 +368,6 @@ const CategoriesViewPage = () => {
                                 let _category = startCategory
                                   .concat(newCategory)
                                   .concat(endCategory);
-                                console.log("Children", _category);
                                 setCategory({
                                   ...category,
                                   children: _category,
@@ -394,7 +391,6 @@ const CategoriesViewPage = () => {
                       id={-2}
                       category={{ name: "", thumbnail: "", type: "Category" }}
                       action={(modalValue) => {
-                        console.log(modalValue);
                         setCategory({
                           ...category,
                           children: [...category.children, modalValue],

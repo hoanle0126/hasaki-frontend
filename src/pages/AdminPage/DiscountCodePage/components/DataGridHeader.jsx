@@ -13,6 +13,7 @@ import {
   Popper,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -55,6 +56,7 @@ function RenderProduct(props) {
 }
 
 function RenderAction(props) {
+  const theme = useTheme();
   const { row, rows } = props;
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -84,7 +86,7 @@ function RenderAction(props) {
       <IconButton onClick={handleClick}>
         <Icon
           icon="eva:more-vertical-fill"
-          color={MuiTheme().palette.text.primary}
+          color={theme.palette.text.primary}
         />
       </IconButton>
       <Popover
@@ -109,7 +111,7 @@ function RenderAction(props) {
           <MenuItem>
             <Icon
               icon="solar:trash-bin-trash-bold"
-              color={MuiTheme().palette.error.main}
+              color={theme.palette.error.main}
             />
             <Typography
               variant="body2"
@@ -129,7 +131,6 @@ function RenderAction(props) {
         handleClose={async () => setOpenModal(-1)}
         discountCodeValue={row}
         action={async (modalValue) => {
-          console.log("Form ", modalValue);
           await dispatch(
             updateDiscountCode({
               code: modalValue,

@@ -14,6 +14,7 @@ import {
   Popper,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -68,6 +69,7 @@ function RenderDateTime(props) {
 }
 
 function RenderStock(props) {
+  const theme = useTheme();
   const { value, row } = props;
   const [status, setStatus] = React.useState({
     title: "",
@@ -150,7 +152,7 @@ function RenderAction(props) {
       <IconButton onClick={handleClick}>
         <Icon
           icon="eva:more-vertical-fill"
-          color={MuiTheme().palette.text.primary}
+          color={theme.palette.text.primary}
         />
       </IconButton>
       <Popover
@@ -175,7 +177,7 @@ function RenderAction(props) {
           <MenuItem onClick={() => dispatch(deleteProduct(row.url))}>
             <Icon
               icon="solar:trash-bin-trash-bold"
-              color={MuiTheme().palette.error.main}
+              color={theme.palette.error.main}
             />
             <Typography variant="body2" color={"error"}>
               Delete

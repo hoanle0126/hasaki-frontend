@@ -155,7 +155,6 @@ const ProductModal = ({ open, handleClose, action, deal }) => {
                       <ListItemButton
                         key={index}
                         onClick={() => {
-                          console.log(dealModel);
                           setDealModel({
                             ...dealModel,
                             products: [

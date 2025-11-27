@@ -12,18 +12,32 @@ import {
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const MainSection = () => {
+  const location = useLocation();
   const [openAuthEl, setOpenAuthEl] = React.useState(null);
   const [openUserEl, setOpenUserEl] = React.useState(null);
   const [openLogin, setOpenLogin] = React.useState(false);
-  const { user, loading } = useSelector((store) => store.user);
+  const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const theme = useTheme();
+
+  React.useEffect(() => {
+    if (user.email) {
+      setOpenAuthEl(null);
+      setOpenUserEl(null);
+    }
+  }, [user]);
+
+  React.useEffect(() => {
+    setOpenAuthEl(null);
+    setOpenUserEl(null);
+  }, [location.pathname]);
 
   return (
     <AppBar
@@ -34,19 +48,6 @@ const MainSection = () => {
       }}
       position="sticky"
     >
-      <Stack
-        sx={{
-          paddingX: "120px",
-          backgroundColor: "#084322",
-        }}
-        onClick={() => navigate("/")}
-      >
-        <img
-          src="https://media.hcdn.vn/hsk/1749726223top14156.jpg"
-          width="100%"
-          height="50px"
-        />
-      </Stack>
       <Stack
         direction="row"
         sx={{
@@ -119,7 +120,7 @@ const MainSection = () => {
               icon="eva:search-fill"
               width="32"
               height="32"
-              color={MuiTheme().palette.primary.main}
+              color={theme.palette.primary.main}
             />
           </Stack>
         </Stack>
@@ -303,7 +304,15 @@ const MainSection = () => {
             direction="row"
             alignItems="center"
             gap="8px"
-            onClick={() => dispatch(logout())}
+            onClick={() =>
+              dispatch(
+                logout({
+                  onSuccess: () => {
+                    setOpenUserEl(null);
+                  },
+                })
+              )
+            }
           >
             <Icon icon="solar:logout-2-linear" width={20} height={20} />
             <Typography variant="body2">Thoát</Typography>

@@ -1,8 +1,8 @@
 import AdminLayout from "@/layouts/AdminLayout";
 import { Icon } from "@iconify/react";
-import { Box, Breadcrumbs, Button, Stack, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Button, Stack, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import React from "react";
+import React, { use } from "react";
 import DataGridHeader from "./components/DataGridHeader";
 import DataGridToolbar from "./components/DataGridToolbar";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +23,7 @@ const getTogglableColumns = (columns) => {
 };
 
 const DiscountCodePage = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const [openModal, setOpenModal] = React.useState(false);
   const [filterButtonEl, setFilterButtonEl] = React.useState(null);
@@ -37,10 +38,6 @@ const DiscountCodePage = () => {
   React.useEffect(() => {
     dispatch(getAllCodes());
   }, []);
-
-  React.useEffect(() => {
-    console.log("Dispatch", codes);
-  }, [loading]);
 
   return (
     <AdminDefaultLayout
@@ -77,7 +74,7 @@ const DiscountCodePage = () => {
           boxShadow: "custom.card",
           border: "none",
           backgroundColor:
-            MuiTheme().palette.mode === "dark" && "background.default",
+            theme.palette.mode === "dark" && "background.default",
           "& .MuiDataGrid-columnHeader": {
             "& .MuiDataGrid-columnHeaderTitle": {
               fontWeight: 600,
@@ -167,7 +164,6 @@ const DiscountCodePage = () => {
         open={openModal}
         handleClose={async () => setOpenModal(false)}
         action={async (modalValue) => {
-          console.log("Form ", modalValue);
           await dispatch(
             addDiscountCode({
               code: modalValue,

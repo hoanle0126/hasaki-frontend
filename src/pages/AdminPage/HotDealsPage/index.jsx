@@ -15,10 +15,6 @@ const HotDealsPage = () => {
     dispatch(getAllHotDeals());
   }, []);
 
-  React.useEffect(() => {
-    console.log(hot_deals);
-  }, [loading]);
-
   return (
     <AdminDefaultLayout
       title="Hot Deals"

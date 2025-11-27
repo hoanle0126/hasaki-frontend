@@ -27,13 +27,6 @@ const SuccessModal = ({ open }) => {
         <Typography id="modal-modal-title" variant="h4" component="h2">
           Thank you for your purchase!
         </Typography>
-        {/* <SuccessPurchase
-          colorMain={MuiTheme().palette.success.main}
-          colorDark={MuiTheme().palette.success.dark}
-          colorLight={MuiTheme().palette.success.light}
-          width={320}
-          height={320}
-        /> */}
         <Typography variant="h6" fontWeight={400} textAlign="center">
           Thanks for placing order
         </Typography>

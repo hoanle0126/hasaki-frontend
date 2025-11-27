@@ -12,6 +12,7 @@ import {
   Popper,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -50,6 +51,7 @@ function RenderProduct(props) {
 
 function RenderAction(props) {
   const { row } = props;
+  const theme = useTheme();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
@@ -77,7 +79,7 @@ function RenderAction(props) {
       <IconButton onClick={handleClick}>
         <Icon
           icon="eva:more-vertical-fill"
-          color={MuiTheme().palette.text.primary}
+          color={theme.palette.text.primary}
         />
       </IconButton>
       <Popover
@@ -95,18 +97,14 @@ function RenderAction(props) {
         }}
       >
         <MenuList>
-          <MenuItem
-            onClick={() =>
-              navigate("/admin/categories/" + row.id)
-            }
-          >
+          <MenuItem onClick={() => navigate("/admin/categories/" + row.id)}>
             <Icon icon="solar:eye-bold" />
             View {row.id}
           </MenuItem>
           <MenuItem>
             <Icon
               icon="solar:trash-bin-trash-bold"
-              color={MuiTheme().palette.error.main}
+              color={theme.palette.error.main}
             />
             <Typography
               variant="body2"
