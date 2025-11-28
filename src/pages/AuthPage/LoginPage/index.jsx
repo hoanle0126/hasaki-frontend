@@ -156,7 +156,6 @@ const LoginPage = ({ open, handleClose, navigate }) => {
               variant="contained"
               sx={{ borderRadius: "99px" }}
               type="submit"
-              loading={loading}
             >
               Đăng nhập
             </Button>
